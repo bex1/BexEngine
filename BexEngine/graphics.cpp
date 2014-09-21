@@ -3,10 +3,10 @@
 //=============================================================================
 // Constructor
 //=============================================================================
-Graphics::Graphics()
+GraphicsSystem::GraphicsSystem()
 {
-	direct3d = NULL;
-	device3d = NULL;
+	direct3d = nullptr;
+	device3d = nullptr;
 	fullscreen = false;
 	width = GAME_WIDTH;    // width & height are replaced in initialize()
 	height = GAME_HEIGHT;
@@ -16,7 +16,7 @@ Graphics::Graphics()
 //=============================================================================
 // Destructor
 //=============================================================================
-Graphics::~Graphics()
+GraphicsSystem::~GraphicsSystem()
 {
 	releaseAll();
 }
@@ -24,7 +24,7 @@ Graphics::~Graphics()
 //=============================================================================
 // Release all
 //=============================================================================
-void Graphics::releaseAll()
+void GraphicsSystem::releaseAll()
 {
 	SAFE_RELEASE(device3d);
 	SAFE_RELEASE(direct3d);
@@ -34,7 +34,7 @@ void Graphics::releaseAll()
 // Initialize DirectX graphics
 // throws GameError on error
 //=============================================================================
-void Graphics::initialize(HWND hw, int w, int h, bool full)
+void GraphicsSystem::initialize(HWND hw, int w, int h, bool full)
 {
 	hwnd = hw;
 	width = w;
@@ -43,7 +43,7 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
 
 	//initialize Direct3D
 	direct3d = Direct3DCreate9(D3D_SDK_VERSION);
-	if (direct3d == NULL)
+	if (direct3d == nullptr)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Direct3D"));
 
 	initD3Dpp();        // init D3D presentation parameters
@@ -86,7 +86,7 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
 //=============================================================================
 // Initialize D3D presentation parameters
 //=============================================================================
-void Graphics::initD3Dpp()
+void GraphicsSystem::initD3Dpp()
 {
 	try{
 		ZeroMemory(&d3dpp, sizeof(d3dpp));              // fill the structure with 0
@@ -114,11 +114,11 @@ void Graphics::initD3Dpp()
 //=============================================================================
 // Display the backbuffer
 //=============================================================================
-HRESULT Graphics::showBackbuffer()
+HRESULT GraphicsSystem::showBackbuffer()
 {
 	result = E_FAIL;    // default to fail, replace on success
 	// Display backbuffer to screen
-	result = device3d->Present(NULL, NULL, NULL, NULL);
+	result = device3d->Present(nullptr, nullptr, nullptr, nullptr);
 	return result;
 }
 
@@ -130,7 +130,7 @@ HRESULT Graphics::showBackbuffer()
 // Post: Returns true if compatible mode found and pMode structure is filled.
 //       Returns false if no compatible mode found.
 //=============================================================================
-bool Graphics::isAdapterCompatible()
+bool GraphicsSystem::isAdapterCompatible()
 {
 	UINT modes = direct3d->GetAdapterModeCount(D3DADAPTER_DEFAULT,
 		d3dpp.BackBufferFormat);
@@ -150,10 +150,10 @@ bool Graphics::isAdapterCompatible()
 //=============================================================================
 // Test for lost device
 //=============================================================================
-HRESULT Graphics::getDeviceState()
+HRESULT GraphicsSystem::getDeviceState()
 {
 	result = E_FAIL;    // default to fail, replace on success
-	if (device3d == NULL)
+	if (device3d == nullptr)
 		return  result;
 	result = device3d->TestCooperativeLevel();
 	return result;
@@ -162,7 +162,7 @@ HRESULT Graphics::getDeviceState()
 //=============================================================================
 // Reset the graphics device
 //=============================================================================
-HRESULT Graphics::reset()
+HRESULT GraphicsSystem::reset()
 {
 	result = E_FAIL;    // default to fail, replace on success
 	initD3Dpp();                        // init D3D presentation parameters

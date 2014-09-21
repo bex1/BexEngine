@@ -8,8 +8,6 @@
 //=============================================================================
 class Spacewar : public Game
 {
-private:
-	// variables
 
 public:
 	// Constructor
@@ -26,4 +24,6 @@ public:
 	void render();      // "
 	void releaseAll();
 	void resetAll();
+private:
+	// variables
 };

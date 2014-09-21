@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <Mmsystem.h>
+#include <memory>
 #include "graphics.h"
 #include "input.h"
 #include "constants.h"
@@ -25,7 +26,10 @@ public:
 	// Pre: hwnd is handle to window
 	virtual void initialize(HWND hwnd);
 
-	// Call run repeatedly by the main message loop in WinMain
+	// Game loop
+	WPARAM Game::gameLoop(HWND hwnd);
+
+	// Calls to update are repeatedly done by the game loop 
 	virtual void run(HWND);
 
 	// Call when the graphics device was lost.
@@ -44,14 +48,14 @@ public:
 	// Handle lost graphics device
 	virtual void handleLostGraphicsDevice();
 
-	// Return pointer to Graphics.
-	Graphics* getGraphics() { return graphics; }
+	// Return ref to Graphics.
+	GraphicsSystem& getGraphics() { return graphics; }
 
-	// Return pointer to Input.
-	Input* getInput()       { return input; }
+	// Return ref to Input.
+	InputSystem& getInput() { return input; }
 
 	// Exit the game
-	void exitGame()         { PostMessage(hwnd, WM_DESTROY, 0, 0); }
+	void exitGame() { PostMessage(hwnd, WM_DESTROY, 0, 0); }
 
 	// Pure virtual function declarations
 	// These functions MUST be written in any class that inherits from Game
@@ -61,7 +65,6 @@ public:
 
 	// Perform AI calculations.
 	virtual void ai() = 0;
-
 	// Check for collisions.
 	virtual void collisions() = 0;
 
@@ -74,16 +77,19 @@ public:
 
 protected:
 	// common game properties
-	Graphics *graphics;         // pointer to Graphics
-	Input   *input;             // pointer to Input
-	HWND    hwnd;               // window handle
-	HRESULT hr;                 // standard return type
-	LARGE_INTEGER timeStart;    // Performance Counter start value
-	LARGE_INTEGER timeEnd;      // Performance Counter end value
-	LARGE_INTEGER timerFreq;    // Performance Counter frequency
-	float   frameTime;          // time required for last frame
-	float   fps;                // frames per second
-	DWORD   sleepTime;          // number of milli-seconds to sleep between frames
-	bool    paused;             // true if game is paused
+	GraphicsSystem graphics;					// Graphics
+	InputSystem input;						// Input
+	HWND    hwnd;						// window handle
+	HRESULT hr;							// standard return type
+	LARGE_INTEGER timeStart;			// Performance Counter start value
+	LARGE_INTEGER timeEnd;				// Performance Counter end value
+	LARGE_INTEGER timerFreq;			// Performance Counter frequency
+	float   frameTime;					// time required for last frame
+	float   fps;						// frames per second
+	DWORD   sleepTime;					// number of milli-seconds to sleep between frames
+	bool    paused;						// true if game is paused
 	bool    initialized;
+
+private:
+	bool timeToUpdate();
 };

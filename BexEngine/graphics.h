@@ -18,7 +18,7 @@
 #define SETCOLOR_ARGB(a,r,g,b) \
 	((COLOR_ARGB)((((a)& 0xff) << 24) | (((r)& 0xff) << 16) | (((g)& 0xff) << 8) | ((b)& 0xff)))
 
-class Graphics
+class GraphicsSystem final
 {
 private:
 	// DirectX pointers and stuff
@@ -41,10 +41,10 @@ private:
 
 public:
 	// Constructor
-	Graphics();
+	GraphicsSystem();
 
 	// Destructor
-	virtual ~Graphics();
+	virtual ~GraphicsSystem();
 
 	// Releases direct3d and device3d.
 	void    releaseAll();
@@ -98,10 +98,10 @@ public:
 	HRESULT beginScene()
 	{
 		result = E_FAIL;
-		if (device3d == NULL)
+		if (device3d == nullptr)
 			return result;
 		// clear backbuffer to backColor
-		device3d->Clear(0, NULL, D3DCLEAR_TARGET, backColor, 1.0F, 0);
+		device3d->Clear(0, nullptr, D3DCLEAR_TARGET, backColor, 1.0F, 0);
 		result = device3d->BeginScene();          // begin scene for drawing
 		return result;
 	}

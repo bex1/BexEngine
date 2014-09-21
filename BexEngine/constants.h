@@ -3,23 +3,24 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
+#include <string>
 
 //-----------------------------------------------
 // Useful macros
 //-----------------------------------------------
 // Safely delete pointer referenced item
-#define SAFE_DELETE(ptr)       { if (ptr) { delete (ptr); (ptr)=NULL; } }
+#define SAFE_DELETE(ptr)       { if (ptr) { delete (ptr); (ptr)=nullptr; } }
 // Safely release pointer referenced item
-#define SAFE_RELEASE(ptr)      { if(ptr) { (ptr)->Release(); (ptr)=NULL; } }
+#define SAFE_RELEASE(ptr)      { if(ptr) { (ptr)->Release(); (ptr)=nullptr; } }
 // Safely delete pointer referenced array
-#define SAFE_DELETE_ARRAY(ptr) { if(ptr) { delete [](ptr); (ptr)=NULL; } }
+#define SAFE_DELETE_ARRAY(ptr) { if(ptr) { delete [](ptr); (ptr)=nullptr; } }
 
 //-----------------------------------------------
 //                  Constants
 //-----------------------------------------------
 // window
-const char CLASS_NAME[] = "Spacewar";
-const char GAME_TITLE[] = "Game Engine Part 1";
+const std::string CLASS_NAME = "Game name";
+const std::string GAME_TITLE = "Game title";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH = 640;               // width of game in pixels
 const UINT GAME_HEIGHT = 480;               // height of game in pixels

@@ -1,7 +1,7 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 
-class Input;
+class InputSystem;
 
 #include <windows.h>
 #include <WindowsX.h>
@@ -61,31 +61,14 @@ struct ControllerState
 	bool                connected;
 };
 
-class Input
+class InputSystem final
 {
-private:
-	bool keysDown[inputNS::KEYS_ARRAY_LEN];     // true if specified key is down
-	bool keysPressed[inputNS::KEYS_ARRAY_LEN];  // true if specified key was pressed
-	std::string textIn;                         // user entered text
-	char charIn;                                // last character entered
-	bool newLine;                               // true on start of new line
-	int  mouseX, mouseY;                        // mouse screen coordinates
-	int  mouseRawX, mouseRawY;                  // high-definition mouse data
-	RAWINPUTDEVICE Rid[1];                      // for high-definition mouse
-	bool mouseCaptured;                         // true if mouse captured
-	bool mouseLButton;                          // true if left mouse button down
-	bool mouseMButton;                          // true if middle mouse button down
-	bool mouseRButton;                          // true if right mouse button down
-	bool mouseX1Button;                         // true if X1 mouse button down
-	bool mouseX2Button;                         // true if X2 mouse button down
-	ControllerState controllers[MAX_CONTROLLERS];    // state of controllers
-
 public:
 	// Constructor
-	Input();
+	InputSystem();
 
 	// Destructor
-	virtual ~Input();
+	virtual ~InputSystem();
 
 	// Initialize mouse and controller input.
 	// Throws GameError
@@ -391,4 +374,20 @@ public:
 
 	// Vibrates the connected controllers for the desired time.
 	void vibrateControllers(float frameTime);
+private:
+	bool keysDown[inputNS::KEYS_ARRAY_LEN];				// true if specified key is down
+	bool keysPressed[inputNS::KEYS_ARRAY_LEN];			// true if specified key was pressed
+	std::string textIn;									// user entered text
+	char charIn;										// last character entered
+	bool newLine;										// true on start of new line
+	int  mouseX, mouseY;								// mouse screen coordinates
+	int  mouseRawX, mouseRawY;							// high-definition mouse data
+	RAWINPUTDEVICE Rid[1];								// for high-definition mouse
+	bool mouseCaptured;									// true if mouse captured
+	bool mouseLButton;									// true if left mouse button down
+	bool mouseMButton;									// true if middle mouse button down
+	bool mouseRButton;									// true if right mouse button down
+	bool mouseX1Button;									// true if X1 mouse button down
+	bool mouseX2Button;									// true if X2 mouse button down
+	ControllerState controllers[MAX_CONTROLLERS];		// state of controllers
 };

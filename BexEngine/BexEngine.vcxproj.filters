@@ -41,17 +41,17 @@
     <ClInclude Include="graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gameError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="spacewar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

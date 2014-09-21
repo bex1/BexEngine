@@ -3,7 +3,7 @@
 //=============================================================================
 // default constructor
 //=============================================================================
-Input::Input()
+InputSystem::InputSystem()
 {
 	// clear key down array
 	for (size_t i = 0; i < inputNS::KEYS_ARRAY_LEN; i++)
@@ -36,7 +36,7 @@ Input::Input()
 //=============================================================================
 // destructor
 //=============================================================================
-Input::~Input()
+InputSystem::~InputSystem()
 {
 	if (mouseCaptured)
 		ReleaseCapture();               // release mouse
@@ -47,7 +47,7 @@ Input::~Input()
 // Set capture=true to capture mouse
 // Throws GameError
 //=============================================================================
-void Input::initialize(HWND hwnd, bool capture)
+void InputSystem::initialize(HWND hwnd, bool capture)
 {
 	try{
 		mouseCaptured = capture;
@@ -77,7 +77,7 @@ void Input::initialize(HWND hwnd, bool capture)
 // Set true in the keysDown and keysPessed array for this key
 // Pre: wParam contains the virtual key code (0--255)
 //=============================================================================
-void Input::keyDown(WPARAM wParam)
+void InputSystem::keyDown(WPARAM wParam)
 {
 	// make sure key code is within buffer range
 	if (wParam < inputNS::KEYS_ARRAY_LEN)
@@ -92,7 +92,7 @@ void Input::keyDown(WPARAM wParam)
 // Set false in the keysDown array for this key
 // Pre: wParam contains the virtual key code (0--255)
 //=============================================================================
-void Input::keyUp(WPARAM wParam)
+void InputSystem::keyUp(WPARAM wParam)
 {
 	// make sure key code is within buffer range
 	if (wParam < inputNS::KEYS_ARRAY_LEN)
@@ -104,7 +104,7 @@ void Input::keyUp(WPARAM wParam)
 // Save the char just entered in textIn string
 // Pre: wParam contains the char
 //=============================================================================
-void Input::keyIn(WPARAM wParam)
+void InputSystem::keyIn(WPARAM wParam)
 {
 	if (newLine)                            // if start of new line
 	{
@@ -130,7 +130,7 @@ void Input::keyIn(WPARAM wParam)
 //=============================================================================
 // Returns true if the specified VIRTUAL KEY is down, otherwise false.
 //=============================================================================
-bool Input::isKeyDown(UCHAR vkey) const
+bool InputSystem::isKeyDown(UCHAR vkey) const
 {
 	if (vkey < inputNS::KEYS_ARRAY_LEN)
 		return keysDown[vkey];
@@ -142,7 +142,7 @@ bool Input::isKeyDown(UCHAR vkey) const
 // Return true if the specified VIRTUAL KEY has been pressed in the most recent
 // frame. Key presses are erased at the end of each frame.
 //=============================================================================
-bool Input::wasKeyPressed(UCHAR vkey) const
+bool InputSystem::wasKeyPressed(UCHAR vkey) const
 {
 	if (vkey < inputNS::KEYS_ARRAY_LEN)
 		return keysPressed[vkey];
@@ -154,7 +154,7 @@ bool Input::wasKeyPressed(UCHAR vkey) const
 // Return true if any key was pressed in the most recent frame.
 // Key presses are erased at the end of each frame.
 //=============================================================================
-bool Input::anyKeyPressed() const
+bool InputSystem::anyKeyPressed() const
 {
 	for (size_t i = 0; i < inputNS::KEYS_ARRAY_LEN; i++)
 	if (keysPressed[i] == true)
@@ -165,7 +165,7 @@ bool Input::anyKeyPressed() const
 //=============================================================================
 // Clear the specified key press
 //=============================================================================
-void Input::clearKeyPress(UCHAR vkey)
+void InputSystem::clearKeyPress(UCHAR vkey)
 {
 	if (vkey < inputNS::KEYS_ARRAY_LEN)
 		keysPressed[vkey] = false;
@@ -175,7 +175,7 @@ void Input::clearKeyPress(UCHAR vkey)
 // Clear specified input buffers
 // See input.h for what values
 //=============================================================================
-void Input::clear(UCHAR what)
+void InputSystem::clear(UCHAR what)
 {
 	if (what & inputNS::KEYS_DOWN)       // if clear keys down
 	{
@@ -201,7 +201,7 @@ void Input::clear(UCHAR what)
 //=============================================================================
 // Reads mouse screen position into mouseX, mouseY
 //=============================================================================
-void Input::mouseIn(LPARAM lParam)
+void InputSystem::mouseIn(LPARAM lParam)
 {
 	mouseX = GET_X_LPARAM(lParam);
 	mouseY = GET_Y_LPARAM(lParam);
@@ -211,7 +211,7 @@ void Input::mouseIn(LPARAM lParam)
 // Reads raw mouse data into mouseRawX, mouseRawY
 // This routine is compatible with a high-definition mouse
 //=============================================================================
-void Input::mouseRawIn(LPARAM lParam)
+void InputSystem::mouseRawIn(LPARAM lParam)
 {
 	UINT dwSize = 40;
 	static BYTE lpb[40];
@@ -231,7 +231,7 @@ void Input::mouseRawIn(LPARAM lParam)
 //=============================================================================
 // Check for connected controllers
 //=============================================================================
-void Input::checkControllers()
+void InputSystem::checkControllers()
 {
 	DWORD result;
 	for (DWORD i = 0; i < MAX_CONTROLLERS; i++)
@@ -247,7 +247,7 @@ void Input::checkControllers()
 //=============================================================================
 // Read state of connected controllers
 //=============================================================================
-void Input::readControllers()
+void InputSystem::readControllers()
 {
 	DWORD result;
 	for (DWORD i = 0; i < MAX_CONTROLLERS; i++)
@@ -264,7 +264,7 @@ void Input::readControllers()
 //=============================================================================
 // Vibrate connected controllers
 //=============================================================================
-void Input::vibrateControllers(float frameTime)
+void InputSystem::vibrateControllers(float frameTime)
 {
 	for (int i = 0; i < MAX_CONTROLLERS; i++)
 	{
