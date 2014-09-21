@@ -1,10 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Game Engine Part 1
-// Chapter 4 spacewar.cpp v1.0
-// Spacewar is the class we create.
-
 #include "spaceWar.h"
 
 //=============================================================================
@@ -18,7 +11,7 @@ Spacewar::Spacewar()
 //=============================================================================
 Spacewar::~Spacewar()
 {
-    releaseAll();           // call onLostDevice() for every graphics item
+	releaseAll();           // call onLostDevice() for every graphics item
 }
 
 //=============================================================================
@@ -27,9 +20,9 @@ Spacewar::~Spacewar()
 //=============================================================================
 void Spacewar::initialize(HWND hwnd)
 {
-    Game::initialize(hwnd); // throws GameError
+	Game::initialize(hwnd); // throws GameError
 
-    return;
+	return;
 }
 
 //=============================================================================
@@ -62,8 +55,8 @@ void Spacewar::render()
 //=============================================================================
 void Spacewar::releaseAll()
 {
-    Game::releaseAll();
-    return;
+	Game::releaseAll();
+	return;
 }
 
 //=============================================================================
@@ -72,6 +65,6 @@ void Spacewar::releaseAll()
 //=============================================================================
 void Spacewar::resetAll()
 {
-    Game::resetAll();
-    return;
+	Game::resetAll();
+	return;
 }
