@@ -83,7 +83,7 @@ bool CreateMainWindow(HWND &hwnd, HINSTANCE hInstance, int nCmdShow)
 	SetupWindowStruct(wcx, hInstance);
 	// Register the window class. 
 	// RegisterClassEx returns 0 on error.
-	if (!RegisterClassEx(&wcx))    // if error
+	if (!RegisterClassEx(&wcx))   
 		return false;
 
 	//set up the screen in windowed or fullscreen mode?

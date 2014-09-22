@@ -79,7 +79,8 @@ LRESULT Game::messageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			return 0;
 		}
 	}
-	return DefWindowProc(hwnd, msg, wParam, lParam);    // let Windows handle it
+	// let Windows handle it
+	return DefWindowProc(hwnd, msg, wParam, lParam);    
 }
 
 //=============================================================================
@@ -164,7 +165,9 @@ void Game::handleLostGraphicsDevice()
 	}
 }
 
-
+//=============================================================================
+// Main game loop 
+//=============================================================================
 WPARAM Game::gameLoop(HWND hwnd)
 {
 	MSG msg;
@@ -222,6 +225,9 @@ void Game::run(HWND hwnd) {
 	input.clear(inputNS::KEYS_PRESSED);
 }
 
+//=============================================================================
+// Checks if its time to update. Also updates timers and fps.
+//=============================================================================
 bool Game::timeToUpdate() {
 	// calculate elapsed time of last frame, save in frameTime
 	QueryPerformanceCounter(&timeEnd);

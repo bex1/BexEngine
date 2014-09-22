@@ -20,24 +20,6 @@
 
 class GraphicsSystem final
 {
-private:
-	// DirectX pointers and stuff
-	LP_3D       direct3d;
-	LP_3DDEVICE device3d;
-	D3DPRESENT_PARAMETERS d3dpp;
-	D3DDISPLAYMODE pMode;
-
-	// other variables
-	HRESULT     result;         // standard Windows return codes
-	HWND        hwnd;
-	bool        fullscreen;
-	int         width;
-	int         height;
-	COLOR_ARGB  backColor;      // background color
-
-	// (For internal engine use only. No user serviceable parts inside.)
-	// Initialize D3D presentation parameters
-	void    initD3Dpp();
 
 public:
 	// Constructor
@@ -59,14 +41,6 @@ public:
 
 	// Display the offscreen backbuffer to the screen.
 	HRESULT showBackbuffer();
-
-	// Checks the adapter to see if it is compatible with the BackBuffer height,
-	// width and refresh rate specified in d3dpp. Fills in the pMode structure with
-	// the format of the compatible mode, if found.
-	// Pre: d3dpp is initialized.
-	// Post: Returns true if compatible mode found and pMode structure is filled.
-	//       Returns false if no compatible mode found.
-	bool    isAdapterCompatible();
 
 	// Reset the graphics device.
 	HRESULT reset();
@@ -116,5 +90,33 @@ public:
 			result = device3d->EndScene();
 		return result;
 	}
+	
+private:
+	// DirectX pointers and stuff
+	LP_3D       direct3d;
+	LP_3DDEVICE device3d;
+	D3DPRESENT_PARAMETERS d3dpp;
+	D3DDISPLAYMODE pMode;
+
+	// other variables
+	HRESULT     result;         // standard Windows return codes
+	HWND        hwnd;
+	bool        fullscreen;
+	int         width;
+	int         height;
+	COLOR_ARGB  backColor;      // background color
+
+	// (For internal engine use only. No user serviceable parts inside.)
+	// Initialize D3D presentation parameters
+	void initD3DPresentaionParameters();
+	// Handle any graphics compatibility issues and return concluded device behavior
+	DWORD handleGraphicsCompatibility();
+	// Checks the adapter to see if it is compatible with the BackBuffer height,
+	// width and refresh rate specified in d3dpp. Fills in the pMode structure with
+	// the format of the compatible mode, if found.
+	// Pre: d3dpp is initialized.
+	// Post: Returns true if compatible mode found and pMode structure is filled.
+	//       Returns false if no compatible mode found.
+	bool    isAdapterCompatible();
 };
 

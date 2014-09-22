@@ -45,9 +45,6 @@ public:
 	// Render game items.
 	virtual void renderGame();
 
-	// Handle lost graphics device
-	virtual void handleLostGraphicsDevice();
-
 	// Return ref to Graphics.
 	GraphicsSystem& getGraphics() { return graphics; }
 
@@ -56,10 +53,9 @@ public:
 
 	// Exit the game
 	void exitGame() { PostMessage(hwnd, WM_DESTROY, 0, 0); }
-
+protected:
 	// Pure virtual function declarations
 	// These functions MUST be written in any class that inherits from Game
-
 	// Update game items.
 	virtual void update() = 0;
 
@@ -75,10 +71,9 @@ public:
 	//   draw non-sprites
 	virtual void render() = 0;
 
-protected:
 	// common game properties
-	GraphicsSystem graphics;					// Graphics
-	InputSystem input;						// Input
+	GraphicsSystem graphics;			// Graphics
+	InputSystem input;					// Input
 	HWND    hwnd;						// window handle
 	HRESULT hr;							// standard return type
 	LARGE_INTEGER timeStart;			// Performance Counter start value
@@ -91,5 +86,8 @@ protected:
 	bool    initialized;
 
 private:
+	// Checks if its time to update. Also updates timers and fps.
 	bool timeToUpdate();
+	// Handle lost graphics device
+	void handleLostGraphicsDevice();
 };
